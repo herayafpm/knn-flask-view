@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-group">
+      <label for="picture">Upload File</label>
+      <input type="file" class="form-control-file" id="picture" required accept="image/*">
+    </div>
+    <button class="btn btn-primary" id="upload">Proses</button>
+    <div>
+      Hasil: <span class="hasil"></span>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js">
+  </script>
+  <script>
+    $('#upload').on('click', function () {
+      var file_data = $('#picture').prop('files')[0];
+      var form_data = new FormData();
+      form_data.append('file', file_data);
+      $('.hasil').html("")
+      $.ajax({
+        url: 'https://knn-heraya.herokuapp.com/proses',
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: form_data,
+        type: 'post',
+        success: function (res) {
+          $('.hasil').html(res.result)
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
